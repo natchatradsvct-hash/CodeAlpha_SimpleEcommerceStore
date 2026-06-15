@@ -1,0 +1,24 @@
+body{
+  text-align:center;
+  font-family:Arial;
+}
+
+.product{
+  border:1px solid black;
+  padding:20px;
+  margin:20px;
+}
+button{
+  background-color: green;
+  color: white;
+  padding: 10px;
+  border: none;
+}
+
+nav{
+  margin: 10px;
+}
+
+a{
+  text-decoration: none;
+}
