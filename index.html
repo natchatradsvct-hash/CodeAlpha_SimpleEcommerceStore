@@ -154,10 +154,13 @@ button{
 <div class="container" id="product-list"></div>
 
 <!-- CART -->
-<div class="cart">
+  <button onclick="toggleCart()">🛒 Cart</button>
+<div class="cart" id="cartBox" style="display:none;">
   <h3>Cart</h3>
   <div id="cart-items"></div>
   <h3 id="total"></h3>
+</div>
+
 </div>
 
 <!-- CHECKOUT -->
