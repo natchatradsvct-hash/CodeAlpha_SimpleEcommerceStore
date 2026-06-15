@@ -314,14 +314,36 @@ function closeCheckout(){
 
 /* 🎉 SUCCESS ORDER */
 function pay(){
-  cart=[];
-  save();
+  // clear cart
+  cart = [];
+  localStorage.setItem("cart", JSON.stringify(cart));
+  update();
 
-  document.getElementById("checkout").innerHTML=`
-    <div style="margin-top:100px;">
-      <h1>🎉 Order Successfully Placed!</h1>
-      <p>Thank you for shopping</p>
-      <button onclick="location.reload()">Continue Shopping</button>
+  // show success screen properly
+  document.getElementById("checkout").style.display = "block";
+
+  document.getElementById("checkout").innerHTML = `
+    <div style="
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      height:100%;
+      text-align:center;
+    ">
+      <h1 style="color:green;">🎉 Order Successfully Placed!</h1>
+      <p>Thank you for shopping with us.</p>
+
+      <button onclick="location.reload()" style="
+        padding:10px 15px;
+        background:#2874f0;
+        color:white;
+        border:none;
+        border-radius:5px;
+        margin-top:10px;
+      ">
+        Continue Shopping
+      </button>
     </div>
   `;
 }
