@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -63,7 +64,7 @@ button:hover{
   background:#0b5ed7;
 }
 
-/* CART BOX */
+/* CART */
 .cart{
   position:fixed;
   right:0;
@@ -114,15 +115,37 @@ button:hover{
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-/* PRODUCTS */
+/* 25 PRODUCTS */
 let products = [
   {name:"Shoe 1", price:999, img:"shoe1.jpg"},
   {name:"Shoe 2", price:1099, img:"shoe2.jpg"},
-  {name:"Headphones 1", price:1499, img:"headphone1.jpg"},
-  {name:"Headphones 2", price:1599, img:"headphone2.jpg"},
+  {name:"Shoe 3", price:1199, img:"shoe3.jpg"},
+  {name:"Shoe 4", price:1299, img:"shoe4.jpg"},
+  {name:"Shoe 5", price:1399, img:"shoe5.jpg"},
+
+  {name:"Headphone 1", price:1499, img:"headphones1.jpg"},
+  {name:"Headphone 2", price:1599, img:"headphones2.jpg"},
+  {name:"Headphone 3", price:1699, img:"headphones3.jpg"},
+  {name:"Headphone 4", price:1799, img:"headphones4.jpg"},
+  {name:"Headphone 5", price:1899, img:"headphones5.jpg"},
+
   {name:"Tshirt 1", price:499, img:"tshirt1.jpg"},
+  {name:"Tshirt 2", price:599, img:"tshirt2.jpg"},
+  {name:"Tshirt 3", price:699, img:"tshirt3.jpg"},
+  {name:"Tshirt 4", price:799, img:"tshirt4.jpg"},
+  {name:"Tshirt 5", price:899, img:"tshirt5.jpg"},
+
   {name:"Phone 1", price:10999, img:"phone1.jpg"},
-  {name:"Watch 1", price:1999, img:"watch1.jpg"}
+  {name:"Phone 2", price:11999, img:"phone2.jpg"},
+  {name:"Phone 3", price:12999, img:"phone3.jpg"},
+  {name:"Phone 4", price:13999, img:"phone4.jpg"},
+  {name:"Phone 5", price:14999, img:"phone5.jpg"},
+
+  {name:"Watch 1", price:1999, img:"watch1.jpg"},
+  {name:"Watch 2", price:2199, img:"watch2.jpg"},
+  {name:"Watch 3", price:2399, img:"watch3.jpg"},
+  {name:"Watch 4", price:2599, img:"watch4.jpg"},
+  {name:"Watch 5", price:2799, img:"watch5.jpg"}
 ];
 
 /* DISPLAY PRODUCTS */
@@ -163,13 +186,13 @@ function removeItem(i){
   saveCart();
 }
 
-/* SAVE + UPDATE */
+/* SAVE */
 function saveCart(){
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCart();
 }
 
-/* UPDATE CART UI */
+/* UPDATE CART */
 function updateCart(){
   document.getElementById("cart-count").innerText = cart.length;
 
