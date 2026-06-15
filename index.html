@@ -1,14 +1,13 @@
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Flip Store</title>
+<title>Flip Store Pro</title>
 
 <style>
 body{
-  font-family: Arial;
   margin:0;
+  font-family:Arial;
   background:#f1f3f6;
 }
 
@@ -16,17 +15,37 @@ body{
 header{
   background:#2874f0;
   color:white;
-  padding:15px;
+  padding:12px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
 header input{
-  width:40%;
+  width:35%;
   padding:8px;
   border:none;
   border-radius:5px;
+}
+
+/* CATEGORY BAR */
+.tabs{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  background:white;
+}
+
+.tab{
+  padding:8px 12px;
+  background:#eee;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.tab:hover{
+  background:#2874f0;
+  color:white;
 }
 
 /* PRODUCTS */
@@ -48,110 +67,156 @@ header input{
   width:100%;
   height:160px;
   object-fit:cover;
-  border-radius:8px;
 }
 
 button{
   background:#2874f0;
   color:white;
   border:none;
-  padding:8px;
+  padding:6px;
   border-radius:5px;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#0b5ed7;
 }
 
 /* CART */
 .cart{
   position:fixed;
   right:0;
-  top:70px;
+  top:0;
   width:300px;
-  height:90%;
+  height:100%;
   background:white;
   box-shadow:-2px 0 10px rgba(0,0,0,0.2);
   padding:10px;
   overflow:auto;
 }
 
-.cart-item{
-  border-bottom:1px solid #ddd;
-  padding:10px;
+/* LOGIN */
+#loginBox{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.small-btn{
-  background:red;
-  padding:3px 6px;
-  font-size:12px;
+.login{
+  padding:20px;
+  background:#eee;
+  border-radius:10px;
+}
+
+.login input{
+  display:block;
+  margin:10px 0;
+  padding:8px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h2>Flip Store</h2>
+<!-- LOGIN -->
+<div id="loginBox">
+  <div class="login">
+    <h2>Login</h2>
+    <input id="user" placeholder="Username">
+    <input id="pass" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+</div>
 
-  <input type="text" id="search" placeholder="Search products...">
+<header>
+  <h2>Flip Store Pro</h2>
+
+  <input id="search" placeholder="Search products...">
 
   <div>
     🛒 <span id="cart-count">0</span>
+    <button onclick="openCheckout()">Checkout</button>
   </div>
 </header>
+
+<!-- CATEGORY TABS -->
+<div class="tabs">
+  <div class="tab" onclick="filterCat('all')">All</div>
+  <div class="tab" onclick="filterCat('shoe')">Shoes</div>
+  <div class="tab" onclick="filterCat('headphone')">Headphones</div>
+  <div class="tab" onclick="filterCat('tshirt')">T-Shirts</div>
+  <div class="tab" onclick="filterCat('phone')">Phones</div>
+  <div class="tab" onclick="filterCat('watch')">Watches</div>
+</div>
 
 <!-- PRODUCTS -->
 <div class="container" id="product-list"></div>
 
 <!-- CART -->
 <div class="cart">
-  <h3>Your Cart</h3>
+  <h3>Cart</h3>
   <div id="cart-items"></div>
   <h3 id="total"></h3>
+</div>
+
+<!-- CHECKOUT -->
+<div id="checkoutBox" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:white; padding:20px;">
+  <h2>Checkout</h2>
+  <p id="checkoutTotal"></p>
+
+  <h3>Payment</h3>
+  <button onclick="pay()">Pay Now</button>
+  <button onclick="closeCheckout()">Close</button>
 </div>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+/* LOGIN */
+function login(){
+  document.getElementById("loginBox").style.display="none";
+}
+
 /* 25 PRODUCTS */
 let products = [
-  {name:"Shoe 1", price:999, img:"shoe1.jpg"},
-  {name:"Shoe 2", price:1099, img:"shoe2.jpg"},
-  {name:"Shoe 3", price:1199, img:"shoe3.jpg"},
-  {name:"Shoe 4", price:1299, img:"shoe4.jpg"},
-  {name:"Shoe 5", price:1399, img:"shoe5.jpg"},
+  {name:"Shoe 1",cat:"shoe",price:999,img:"shoe1.jpg"},
+  {name:"Shoe 2",cat:"shoe",price:1099,img:"shoe2.jpg"},
+  {name:"Shoe 3",cat:"shoe",price:1199,img:"shoe3.jpg"},
+  {name:"Shoe 4",cat:"shoe",price:1299,img:"shoe4.jpg"},
+  {name:"Shoe 5",cat:"shoe",price:1399,img:"shoe5.jpg"},
 
-  {name:"Headphone 1", price:1499, img:"headphones1.jpg"},
-  {name:"Headphone 2", price:1599, img:"headphones2.jpg"},
-  {name:"Headphone 3", price:1699, img:"headphones3.jpg"},
-  {name:"Headphone 4", price:1799, img:"headphones4.jpg"},
-  {name:"Headphone 5", price:1899, img:"headphones5.jpg"},
+  {name:"Headphone 1",cat:"headphone",price:1499,img:"headphones1.jpg"},
+  {name:"Headphone 2",cat:"headphone",price:1599,img:"headphones2.jpg"},
+  {name:"Headphone 3",cat:"headphone",price:1699,img:"headphones3.jpg"},
+  {name:"Headphone 4",cat:"headphone",price:1799,img:"headphones4.jpg"},
+  {name:"Headphone 5",cat:"headphone",price:1899,img:"headphones5.jpg"},
 
-  {name:"Tshirt 1", price:499, img:"tshirt1.jpg"},
-  {name:"Tshirt 2", price:599, img:"tshirt2.jpg"},
-  {name:"Tshirt 3", price:699, img:"tshirt3.jpg"},
-  {name:"Tshirt 4", price:799, img:"tshirt4.jpg"},
-  {name:"Tshirt 5", price:899, img:"tshirt5.jpg"},
+  {name:"Tshirt 1",cat:"tshirt",price:499,img:"tshirt1.jpg"},
+  {name:"Tshirt 2",cat:"tshirt",price:599,img:"tshirt2.jpg"},
+  {name:"Tshirt 3",cat:"tshirt",price:699,img:"tshirt3.jpg"},
+  {name:"Tshirt 4",cat:"tshirt",price:799,img:"tshirt4.jpg"},
+  {name:"Tshirt 5",cat:"tshirt",price:899,img:"tshirt5.jpg"},
 
-  {name:"Phone 1", price:10999, img:"phone1.jpg"},
-  {name:"Phone 2", price:11999, img:"phone2.jpg"},
-  {name:"Phone 3", price:12999, img:"phone3.jpg"},
-  {name:"Phone 4", price:13999, img:"phone4.jpg"},
-  {name:"Phone 5", price:14999, img:"phone5.jpg"},
+  {name:"Phone 1",cat:"phone",price:10999,img:"phone1.jpg"},
+  {name:"Phone 2",cat:"phone",price:11999,img:"phone2.jpg"},
+  {name:"Phone 3",cat:"phone",price:12999,img:"phone3.jpg"},
+  {name:"Phone 4",cat:"phone",price:13999,img:"phone4.jpg"},
+  {name:"Phone 5",cat:"phone",price:14999,img:"phone5.jpg"},
 
-  {name:"Watch 1", price:1999, img:"watch1.jpg"},
-  {name:"Watch 2", price:2199, img:"watch2.jpg"},
-  {name:"Watch 3", price:2399, img:"watch3.jpg"},
-  {name:"Watch 4", price:2599, img:"watch4.jpg"},
-  {name:"Watch 5", price:2799, img:"watch5.jpg"}
+  {name:"Watch 1",cat:"watch",price:1999,img:"watch1.jpg"},
+  {name:"Watch 2",cat:"watch",price:2199,img:"watch2.jpg"},
+  {name:"Watch 3",cat:"watch",price:2399,img:"watch3.jpg"},
+  {name:"Watch 4",cat:"watch",price:2599,img:"watch4.jpg"},
+  {name:"Watch 5",cat:"watch",price:2799,img:"watch5.jpg"}
 ];
 
-/* DISPLAY PRODUCTS */
+let current = products;
+
+/* DISPLAY */
 function display(list){
   let box = document.getElementById("product-list");
-  box.innerHTML = "";
+  box.innerHTML="";
 
   list.forEach((p,i)=>{
     box.innerHTML += `
@@ -159,73 +224,83 @@ function display(list){
         <img src="${p.img}">
         <h3>${p.name}</h3>
         <p>₹${p.price}</p>
-        <button onclick="addToCart(${i})">Add to Cart</button>
+        <button onclick="addToCart(${i})">Add</button>
       </div>
     `;
   });
 }
 
-/* ADD TO CART */
+/* FILTER */
+function filterCat(cat){
+  if(cat=="all") display(products);
+  else display(products.filter(p=>p.cat==cat));
+}
+
+/* CART */
 function addToCart(i){
   let item = products[i];
+  let found = cart.find(c=>c.name==item.name);
 
-  let found = cart.find(c => c.name === item.name);
+  if(found) found.qty++;
+  else cart.push({...item,qty:1});
 
-  if(found){
-    found.qty += 1;
-  } else {
-    cart.push({...item, qty:1});
-  }
-
-  saveCart();
+  save();
 }
 
-/* REMOVE ITEM */
-function removeItem(i){
-  cart.splice(i,1);
-  saveCart();
+function save(){
+  localStorage.setItem("cart",JSON.stringify(cart));
+  update();
 }
 
-/* SAVE */
-function saveCart(){
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCart();
-}
+function update(){
+  document.getElementById("cart-count").innerText=cart.length;
 
-/* UPDATE CART */
-function updateCart(){
-  document.getElementById("cart-count").innerText = cart.length;
+  let box=document.getElementById("cart-items");
+  box.innerHTML="";
 
-  let box = document.getElementById("cart-items");
-  box.innerHTML = "";
+  let total=0;
 
-  let total = 0;
+  cart.forEach((c,i)=>{
+    total+=c.price*c.qty;
 
-  cart.forEach((item,i)=>{
-    total += item.price * item.qty;
-
-    box.innerHTML += `
-      <div class="cart-item">
-        <b>${item.name}</b><br>
-        ₹${item.price} × ${item.qty}<br>
-        <button class="small-btn" onclick="removeItem(${i})">Remove</button>
+    box.innerHTML+=`
+      <div>
+        ${c.name} (x${c.qty})<br>
+        ₹${c.price}
       </div>
     `;
   });
 
-  document.getElementById("total").innerText = "Total: ₹" + total;
+  document.getElementById("total").innerText="Total ₹"+total;
 }
 
 /* SEARCH */
-document.getElementById("search").addEventListener("input",function(){
-  let value = this.value.toLowerCase();
-  let filtered = products.filter(p => p.name.toLowerCase().includes(value));
-  display(filtered);
+document.getElementById("search").addEventListener("input",e=>{
+  let v=e.target.value.toLowerCase();
+  display(products.filter(p=>p.name.toLowerCase().includes(v)));
 });
 
-/* INIT */
+/* CHECKOUT */
+function openCheckout(){
+  let total=0;
+  cart.forEach(c=>total+=c.price*c.qty);
+  document.getElementById("checkoutTotal").innerText="Pay ₹"+total;
+  document.getElementById("checkoutBox").style.display="block";
+}
+
+function closeCheckout(){
+  document.getElementById("checkoutBox").style.display="none";
+}
+
+function pay(){
+  alert("Payment Successful (Demo)");
+  cart=[];
+  save();
+  closeCheckout();
+}
+
 display(products);
-updateCart();
+update();
 </script>
 
 </body>
