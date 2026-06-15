@@ -1,269 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My eCommerce Store</title>
+<meta charset="UTF-8">
+<title>Flip Store</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      margin: 0;
-      background: #f4f4f4;
-    }
+<style>
+body{
+  font-family: Arial;
+  margin:0;
+  background:#f1f3f6;
+}
 
-    header {
-      background: black;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-    }
+/* HEADER */
+header{
+  background:#2874f0;
+  color:white;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
-      padding: 20px;
-    }
+header input{
+  width:40%;
+  padding:8px;
+  border:none;
+  border-radius:5px;
+}
 
-    .card {
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+/* PRODUCTS */
+.container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  padding:15px;
+}
 
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
+.card{
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  text-align:center;
+}
 
-    .price {
-      color: green;
-      font-weight: bold;
-    }
+.card img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:8px;
+}
 
-    button {
-      padding: 8px;
-      border: none;
-      background: black;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+button{
+  background:#2874f0;
+  color:white;
+  border:none;
+  padding:8px;
+  border-radius:5px;
+  cursor:pointer;
+}
 
-    button:hover {
-      background: #333;
-    }
-  </style>
+button:hover{
+  background:#0b5ed7;
+}
+
+/* CART BOX */
+.cart{
+  position:fixed;
+  right:0;
+  top:70px;
+  width:300px;
+  height:90%;
+  background:white;
+  box-shadow:-2px 0 10px rgba(0,0,0,0.2);
+  padding:10px;
+  overflow:auto;
+}
+
+.cart-item{
+  border-bottom:1px solid #ddd;
+  padding:10px;
+}
+
+.small-btn{
+  background:red;
+  padding:3px 6px;
+  font-size:12px;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>My Simple eCommerce Store</h1>
-  <p>🛒 Cart Items: <span id="cart-count">0</span></p>
+  <h2>Flip Store</h2>
+
+  <input type="text" id="search" placeholder="Search products...">
+
+  <div>
+    🛒 <span id="cart-count">0</span>
+  </div>
 </header>
 
-<div class="container">
+<!-- PRODUCTS -->
+<div class="container" id="product-list"></div>
 
-  <!-- SHOES -->
-  <div class="card">
-    <img src="shoe1.jpg">
-    <h3>Shoe 1</h3>
-    <p class="price">₹999</p>
-    <button onclick="addToCart('Shoe 1',999)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="shoe2.jpg">
-    <h3>Shoe 2</h3>
-    <p class="price">₹1099</p>
-    <button onclick="addToCart('Shoe 2',1099)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="shoe3.jpg">
-    <h3>Shoe 3</h3>
-    <p class="price">₹1199</p>
-    <button onclick="addToCart('Shoe 3',1199)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="shoe4.jpg">
-    <h3>Shoe 4</h3>
-    <p class="price">₹1299</p>
-    <button onclick="addToCart('Shoe 4',1299)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="shoe5.jpg">
-    <h3>Shoe 5</h3>
-    <p class="price">₹1399</p>
-    <button onclick="addToCart('Shoe 5',1399)">Add to Cart</button>
-  </div>
-
-  <!-- HEADPHONES -->
-  <div class="card">
-    <img src="headphones1.jpg">
-    <h3>Headphone 1</h3>
-    <p class="price">₹1499</p>
-    <button onclick="addToCart('Headphone 1',1499)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="headphones2.jpg">
-    <h3>Headphones 2</h3>
-    <p class="price">₹1599</p>
-    <button onclick="addToCart('Headphone 2',1599)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="headphones3.jpg">
-    <h3>Headphones 3</h3>
-    <p class="price">₹1699</p>
-    <button onclick="addToCart('Headphone 3',1699)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="headphones4.jpg">
-    <h3>Headphones 4</h3>
-    <p class="price">₹1799</p>
-    <button onclick="addToCart('Headphone 4',1799)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="headphones5.jpg">
-    <h3>Headphone 5</h3>
-    <p class="price">₹1899</p>
-    <button onclick="addToCart('Headphone 5',1899)">Add to Cart</button>
-  </div>
-
-  <!-- TSHIRTS -->
-  <div class="card">
-    <img src="tshirt1.jpg">
-    <h3>Tshirt 1</h3>
-    <p class="price">₹499</p>
-    <button onclick="addToCart('Tshirt 1',499)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="tshirt2.jpg">
-    <h3>Tshirt 2</h3>
-    <p class="price">₹599</p>
-    <button onclick="addToCart('Tshirt 2',599)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="tshirt3.jpg">
-    <h3>Tshirt 3</h3>
-    <p class="price">₹699</p>
-    <button onclick="addToCart('Tshirt 3',699)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="tshirt4.jpg">
-    <h3>Tshirt 4</h3>
-    <p class="price">₹799</p>
-    <button onclick="addToCart('Tshirt 4',799)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="tshirt5.jpg">
-    <h3>Tshirt 5</h3>
-    <p class="price">₹899</p>
-    <button onclick="addToCart('Tshirt 5',899)">Add to Cart</button>
-  </div>
-
-  <!-- PHONES -->
-  <div class="card">
-    <img src="phone1.jpg">
-    <h3>Phone 1</h3>
-    <p class="price">₹10999</p>
-    <button onclick="addToCart('Phone 1',10999)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="phone2.jpg">
-    <h3>Phone 2</h3>
-    <p class="price">₹11999</p>
-    <button onclick="addToCart('Phone 2',11999)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="phone3.jpg">
-    <h3>Phone 3</h3>
-    <p class="price">₹12999</p>
-    <button onclick="addToCart('Phone 3',12999)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="phone4.jpg">
-    <h3>Phone 4</h3>
-    <p class="price">₹13999</p>
-    <button onclick="addToCart('Phone 4',13999)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="phone5.jpg">
-    <h3>Phone 5</h3>
-    <p class="price">₹14999</p>
-    <button onclick="addToCart('Phone 5',14999)">Add to Cart</button>
-  </div>
-
-  <!-- WATCHES -->
-  <div class="card">
-    <img src="watch1.jpg">
-    <h3>Watch 1</h3>
-    <p class="price">₹1999</p>
-    <button onclick="addToCart('Watch 1',1999)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="watch2.jpg">
-    <h3>Watch 2</h3>
-    <p class="price">₹2199</p>
-    <button onclick="addToCart('Watch 2',2199)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="watch3.jpg">
-    <h3>Watch 3</h3>
-    <p class="price">₹2399</p>
-    <button onclick="addToCart('Watch 3',2399)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="watch4.jpg">
-    <h3>Watch 4</h3>
-    <p class="price">₹2599</p>
-    <button onclick="addToCart('Watch 4',2599)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="watch5.jpg">
-    <h3>Watch 5</h3>
-    <p class="price">₹2799</p>
-    <button onclick="addToCart('Watch 5',2799)">Add to Cart</button>
-  </div>
-
+<!-- CART -->
+<div class="cart">
+  <h3>Your Cart</h3>
+  <div id="cart-items"></div>
+  <h3 id="total"></h3>
 </div>
 
 <script>
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  function addToCart(name, price) {
-    cart.push({ name, price });
-    localStorage.setItem("cart", JSON.stringify(cart));
-    document.getElementById("cart-count").innerText = cart.length;
-    alert(name + " added to cart!");
+/* PRODUCTS */
+let products = [
+  {name:"Shoe 1", price:999, img:"shoe1.jpg"},
+  {name:"Shoe 2", price:1099, img:"shoe2.jpg"},
+  {name:"Headphone 1", price:1499, img:"headphone1.jpg"},
+  {name:"Headphone 2", price:1599, img:"headphone2.jpg"},
+  {name:"Tshirt 1", price:499, img:"tshirt1.jpg"},
+  {name:"Phone 1", price:10999, img:"phone1.jpg"},
+  {name:"Watch 1", price:1999, img:"watch1.jpg"}
+];
+
+/* DISPLAY PRODUCTS */
+function display(list){
+  let box = document.getElementById("product-list");
+  box.innerHTML = "";
+
+  list.forEach((p,i)=>{
+    box.innerHTML += `
+      <div class="card">
+        <img src="${p.img}">
+        <h3>${p.name}</h3>
+        <p>₹${p.price}</p>
+        <button onclick="addToCart(${i})">Add to Cart</button>
+      </div>
+    `;
+  });
+}
+
+/* ADD TO CART */
+function addToCart(i){
+  let item = products[i];
+
+  let found = cart.find(c => c.name === item.name);
+
+  if(found){
+    found.qty += 1;
+  } else {
+    cart.push({...item, qty:1});
   }
 
+  saveCart();
+}
+
+/* REMOVE ITEM */
+function removeItem(i){
+  cart.splice(i,1);
+  saveCart();
+}
+
+/* SAVE + UPDATE */
+function saveCart(){
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCart();
+}
+
+/* UPDATE CART UI */
+function updateCart(){
   document.getElementById("cart-count").innerText = cart.length;
+
+  let box = document.getElementById("cart-items");
+  box.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item,i)=>{
+    total += item.price * item.qty;
+
+    box.innerHTML += `
+      <div class="cart-item">
+        <b>${item.name}</b><br>
+        ₹${item.price} × ${item.qty}<br>
+        <button class="small-btn" onclick="removeItem(${i})">Remove</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = "Total: ₹" + total;
+}
+
+/* SEARCH */
+document.getElementById("search").addEventListener("input",function(){
+  let value = this.value.toLowerCase();
+  let filtered = products.filter(p => p.name.toLowerCase().includes(value));
+  display(filtered);
+});
+
+/* INIT */
+display(products);
+updateCart();
 </script>
 
 </body>
