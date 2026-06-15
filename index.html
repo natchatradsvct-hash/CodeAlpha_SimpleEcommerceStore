@@ -1,42 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Online Store</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>My eCommerce Store</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .price {
+      color: green;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 8px;
+      border: none;
+      background: black;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #333;
+    }
+  </style>
 </head>
+
 <body>
-<nav>
-<a href="index.html">Home</a> |
-<a href="product.html">Product</a> |
-<a href="cart.html">Cart</a> |
-<a href="login.html">Login</a> |
-<a href="register.html">Register</a>
-</nav>
 
-<hr>
-    <h1>My Online Store</h1>
+<header>
+  <h1>My Simple eCommerce Store</h1>
+</header>
 
-<div class="product">
-  <img src="https://via.placeholder.com/150">
-  <h2>T-Shirt</h2>
-  <p>₹499</p>
-  <button onclick="addToCart()">Add to Cart</button>
+<div class="container">
+
+  <!-- SHOES (1-5) -->
+  <div class="card"><img src="shoe1.jpg"><h3>Shoe 1</h3><p class="price">₹999</p><button>Add to Cart</button></div>
+  <div class="card"><img src="shoe2.jpg"><h3>Shoe 2</h3><p class="price">₹1099</p><button>Add to Cart</button></div>
+  <div class="card"><img src="shoe3.jpg"><h3>Shoe 3</h3><p class="price">₹1199</p><button>Add to Cart</button></div>
+  <div class="card"><img src="shoe4.jpg"><h3>Shoe 4</h3><p class="price">₹1299</p><button>Add to Cart</button></div>
+  <div class="card"><img src="shoe5.jpg"><h3>Shoe 5</h3><p class="price">₹1399</p><button>Add to Cart</button></div>
+
+  <!-- HEADPHONES (1-5) -->
+  <div class="card"><img src="headphone1.jpg"><h3>Headphone 1</h3><p class="price">₹1499</p><button>Add to Cart</button></div>
+  <div class="card"><img src="headphone2.jpg"><h3>Headphone 2</h3><p class="price">₹1599</p><button>Add to Cart</button></div>
+  <div class="card"><img src="headphone3.jpg"><h3>Headphone 3</h3><p class="price">₹1699</p><button>Add to Cart</button></div>
+  <div class="card"><img src="headphone4.jpg"><h3>Headphone 4</h3><p class="price">₹1799</p><button>Add to Cart</button></div>
+  <div class="card"><img src="headphone5.jpg"><h3>Headphone 5</h3><p class="price">₹1899</p><button>Add to Cart</button></div>
+
+  <!-- T-SHIRTS (1-5) -->
+  <div class="card"><img src="tshirt1.jpg"><h3>T-Shirt 1</h3><p class="price">₹499</p><button>Add to Cart</button></div>
+  <div class="card"><img src="tshirt2.jpg"><h3>T-Shirt 2</h3><p class="price">₹599</p><button>Add to Cart</button></div>
+  <div class="card"><img src="tshirt3.jpg"><h3>T-Shirt 3</h3><p class="price">₹699</p><button>Add to Cart</button></div>
+  <div class="card"><img src="tshirt4.jpg"><h3>T-Shirt 4</h3><p class="price">₹799</p><button>Add to Cart</button></div>
+  <div class="card"><img src="tshirt5.jpg"><h3>T-Shirt 5</h3><p class="price">₹899</p><button>Add to Cart</button></div>
+
+  <!-- PHONES (1-5) -->
+  <div class="card"><img src="phone1.jpg"><h3>Phone 1</h3><p class="price">₹10999</p><button>Add to Cart</button></div>
+  <div class="card"><img src="phone2.jpg"><h3>Phone 2</h3><p class="price">₹11999</p><button>Add to Cart</button></div>
+  <div class="card"><img src="phone3.jpg"><h3>Phone 3</h3><p class="price">₹12999</p><button>Add to Cart</button></div>
+  <div class="card"><img src="phone4.jpg"><h3>Phone 4</h3><p class="price">₹13999</p><button>Add to Cart</button></div>
+  <div class="card"><img src="phone5.jpg"><h3>Phone 5</h3><p class="price">₹14999</p><button>Add to Cart</button></div>
+
+  <!-- WATCHES (1-5) -->
+  <div class="card"><img src="watch1.jpg"><h3>Watch 1</h3><p class="price">₹1999</p><button>Add to Cart</button></div>
+  <div class="card"><img src="watch2.jpg"><h3>Watch 2</h3><p class="price">₹2199</p><button>Add to Cart</button></div>
+  <div class="card"><img src="watch3.jpg"><h3>Watch 3</h3><p class="price">₹2399</p><button>Add to Cart</button></div>
+  <div class="card"><img src="watch4.jpg"><h3>Watch 4</h3><p class="price">₹2599</p><button>Add to Cart</button></div>
+  <div class="card"><img src="watch5.jpg"><h3>Watch 5</h3><p class="price">₹2799</p><button>Add to Cart</button></div>
+
 </div>
 
-<div class="product">
-  <img src="https://via.placeholder.com/150">
-  <h2>Shoes</h2>
-  <p>₹999</p>
-  <button onclick="addToCart()">Add to Cart</button>
-</div>
-
-<div class="product">
-  <img src="https://via.placeholder.com/150">
-  <h2>Watch</h2>
-  <p>₹1499</p>
-  <button onclick="addToCart()">Add to Cart</button>
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
