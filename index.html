@@ -16,6 +16,8 @@
       color: white;
       padding: 15px;
       text-align: center;
+      position: sticky;
+      top: 0;
     }
 
     .container {
@@ -64,46 +66,205 @@
 
 <header>
   <h1>My Simple eCommerce Store</h1>
+  <p>🛒 Cart Items: <span id="cart-count">0</span></p>
 </header>
 
 <div class="container">
 
-  <!-- SHOES (1-5) -->
-  <div class="card"><img src="shoe1.jpg"><h3>Shoe 1</h3><p class="price">₹999</p><button>Add to Cart</button></div>
-  <div class="card"><img src="shoe2.jpg"><h3>Shoe 2</h3><p class="price">₹1099</p><button>Add to Cart</button></div>
-  <div class="card"><img src="shoe3.jpg"><h3>Shoe 3</h3><p class="price">₹1199</p><button>Add to Cart</button></div>
-  <div class="card"><img src="shoe4.jpg"><h3>Shoe 4</h3><p class="price">₹1299</p><button>Add to Cart</button></div>
-  <div class="card"><img src="shoe5.jpg"><h3>Shoe 5</h3><p class="price">₹1399</p><button>Add to Cart</button></div>
+  <!-- SHOES -->
+  <div class="card">
+    <img src="shoe1.jpg">
+    <h3>Shoe 1</h3>
+    <p class="price">₹999</p>
+    <button onclick="addToCart('Shoe 1',999)">Add to Cart</button>
+  </div>
 
-  <!-- HEADPHONES (1-5) -->
-  <div class="card"><img src="headphones1.jpg"><h3>Headphone 1</h3><p class="price">₹1499</p><button>Add to Cart</button></div>
-  <div class="card"><img src="headphones2.jpg"><h3>Headphone 2</h3><p class="price">₹1599</p><button>Add to Cart</button></div>
-  <div class="card"><img src="headphones3.jpg"><h3>Headphone 3</h3><p class="price">₹1699</p><button>Add to Cart</button></div>
-  <div class="card"><img src="headphones4.jpg"><h3>Headphone 4</h3><p class="price">₹1799</p><button>Add to Cart</button></div>
-  <div class="card"><img src="headphones5.jpg"><h3>Headphone 5</h3><p class="price">₹1899</p><button>Add to Cart</button></div>
+  <div class="card">
+    <img src="shoe2.jpg">
+    <h3>Shoe 2</h3>
+    <p class="price">₹1099</p>
+    <button onclick="addToCart('Shoe 2',1099)">Add to Cart</button>
+  </div>
 
-  <!-- T-SHIRTS (1-5) -->
-  <div class="card"><img src="tshirt1.jpg"><h3>T-Shirt 1</h3><p class="price">₹499</p><button>Add to Cart</button></div>
-  <div class="card"><img src="tshirt2.jpg"><h3>T-Shirt 2</h3><p class="price">₹599</p><button>Add to Cart</button></div>
-  <div class="card"><img src="tshirt3.jpg"><h3>T-Shirt 3</h3><p class="price">₹699</p><button>Add to Cart</button></div>
-  <div class="card"><img src="tshirt4.jpg"><h3>T-Shirt 4</h3><p class="price">₹799</p><button>Add to Cart</button></div>
-  <div class="card"><img src="tshirt5.jpg"><h3>T-Shirt 5</h3><p class="price">₹899</p><button>Add to Cart</button></div>
+  <div class="card">
+    <img src="shoe3.jpg">
+    <h3>Shoe 3</h3>
+    <p class="price">₹1199</p>
+    <button onclick="addToCart('Shoe 3',1199)">Add to Cart</button>
+  </div>
 
-  <!-- PHONES (1-5) -->
-  <div class="card"><img src="phone1.jpg"><h3>Phone 1</h3><p class="price">₹10999</p><button>Add to Cart</button></div>
-  <div class="card"><img src="phone2.jpg"><h3>Phone 2</h3><p class="price">₹11999</p><button>Add to Cart</button></div>
-  <div class="card"><img src="phone3.jpg"><h3>Phone 3</h3><p class="price">₹12999</p><button>Add to Cart</button></div>
-  <div class="card"><img src="phone4.jpg"><h3>Phone 4</h3><p class="price">₹13999</p><button>Add to Cart</button></div>
-  <div class="card"><img src="phone5.jpg"><h3>Phone 5</h3><p class="price">₹14999</p><button>Add to Cart</button></div>
+  <div class="card">
+    <img src="shoe4.jpg">
+    <h3>Shoe 4</h3>
+    <p class="price">₹1299</p>
+    <button onclick="addToCart('Shoe 4',1299)">Add to Cart</button>
+  </div>
 
-  <!-- WATCHES (1-5) -->
-  <div class="card"><img src="watch1.jpg"><h3>Watch 1</h3><p class="price">₹1999</p><button>Add to Cart</button></div>
-  <div class="card"><img src="watch2.jpg"><h3>Watch 2</h3><p class="price">₹2199</p><button>Add to Cart</button></div>
-  <div class="card"><img src="watch3.jpg"><h3>Watch 3</h3><p class="price">₹2399</p><button>Add to Cart</button></div>
-  <div class="card"><img src="watch4.jpg"><h3>Watch 4</h3><p class="price">₹2599</p><button>Add to Cart</button></div>
-  <div class="card"><img src="watch5.jpg"><h3>Watch 5</h3><p class="price">₹2799</p><button>Add to Cart</button></div>
+  <div class="card">
+    <img src="shoe5.jpg">
+    <h3>Shoe 5</h3>
+    <p class="price">₹1399</p>
+    <button onclick="addToCart('Shoe 5',1399)">Add to Cart</button>
+  </div>
+
+  <!-- HEADPHONES -->
+  <div class="card">
+    <img src="headphone1.jpg">
+    <h3>Headphone 1</h3>
+    <p class="price">₹1499</p>
+    <button onclick="addToCart('Headphone 1',1499)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="headphone2.jpg">
+    <h3>Headphone 2</h3>
+    <p class="price">₹1599</p>
+    <button onclick="addToCart('Headphone 2',1599)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="headphone3.jpg">
+    <h3>Headphone 3</h3>
+    <p class="price">₹1699</p>
+    <button onclick="addToCart('Headphone 3',1699)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="headphone4.jpg">
+    <h3>Headphone 4</h3>
+    <p class="price">₹1799</p>
+    <button onclick="addToCart('Headphone 4',1799)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="headphone5.jpg">
+    <h3>Headphone 5</h3>
+    <p class="price">₹1899</p>
+    <button onclick="addToCart('Headphone 5',1899)">Add to Cart</button>
+  </div>
+
+  <!-- TSHIRTS -->
+  <div class="card">
+    <img src="tshirt1.jpg">
+    <h3>Tshirt 1</h3>
+    <p class="price">₹499</p>
+    <button onclick="addToCart('Tshirt 1',499)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="tshirt2.jpg">
+    <h3>Tshirt 2</h3>
+    <p class="price">₹599</p>
+    <button onclick="addToCart('Tshirt 2',599)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="tshirt3.jpg">
+    <h3>Tshirt 3</h3>
+    <p class="price">₹699</p>
+    <button onclick="addToCart('Tshirt 3',699)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="tshirt4.jpg">
+    <h3>Tshirt 4</h3>
+    <p class="price">₹799</p>
+    <button onclick="addToCart('Tshirt 4',799)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="tshirt5.jpg">
+    <h3>Tshirt 5</h3>
+    <p class="price">₹899</p>
+    <button onclick="addToCart('Tshirt 5',899)">Add to Cart</button>
+  </div>
+
+  <!-- PHONES -->
+  <div class="card">
+    <img src="phone1.jpg">
+    <h3>Phone 1</h3>
+    <p class="price">₹10999</p>
+    <button onclick="addToCart('Phone 1',10999)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="phone2.jpg">
+    <h3>Phone 2</h3>
+    <p class="price">₹11999</p>
+    <button onclick="addToCart('Phone 2',11999)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="phone3.jpg">
+    <h3>Phone 3</h3>
+    <p class="price">₹12999</p>
+    <button onclick="addToCart('Phone 3',12999)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="phone4.jpg">
+    <h3>Phone 4</h3>
+    <p class="price">₹13999</p>
+    <button onclick="addToCart('Phone 4',13999)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="phone5.jpg">
+    <h3>Phone 5</h3>
+    <p class="price">₹14999</p>
+    <button onclick="addToCart('Phone 5',14999)">Add to Cart</button>
+  </div>
+
+  <!-- WATCHES -->
+  <div class="card">
+    <img src="watch1.jpg">
+    <h3>Watch 1</h3>
+    <p class="price">₹1999</p>
+    <button onclick="addToCart('Watch 1',1999)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="watch2.jpg">
+    <h3>Watch 2</h3>
+    <p class="price">₹2199</p>
+    <button onclick="addToCart('Watch 2',2199)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="watch3.jpg">
+    <h3>Watch 3</h3>
+    <p class="price">₹2399</p>
+    <button onclick="addToCart('Watch 3',2399)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="watch4.jpg">
+    <h3>Watch 4</h3>
+    <p class="price">₹2599</p>
+    <button onclick="addToCart('Watch 4',2599)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="watch5.jpg">
+    <h3>Watch 5</h3>
+    <p class="price">₹2799</p>
+    <button onclick="addToCart('Watch 5',2799)">Add to Cart</button>
+  </div>
 
 </div>
+
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    document.getElementById("cart-count").innerText = cart.length;
+    alert(name + " added to cart!");
+  }
+
+  document.getElementById("cart-count").innerText = cart.length;
+</script>
 
 </body>
 </html>
