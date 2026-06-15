@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Flip Store Pro</title>
+<title>Flip Store Full Pro</title>
 
 <style>
 body{
@@ -22,13 +22,13 @@ header{
 }
 
 header input{
-  width:35%;
+  width:30%;
   padding:8px;
   border:none;
   border-radius:5px;
 }
 
-/* CATEGORY BAR */
+/* TABS */
 .tabs{
   display:flex;
   gap:10px;
@@ -37,15 +37,10 @@ header input{
 }
 
 .tab{
-  padding:8px 12px;
+  padding:6px 10px;
   background:#eee;
   border-radius:5px;
   cursor:pointer;
-}
-
-.tab:hover{
-  background:#2874f0;
-  color:white;
 }
 
 /* PRODUCTS */
@@ -75,26 +70,26 @@ button{
   border:none;
   padding:6px;
   border-radius:5px;
+  cursor:pointer;
 }
 
 /* CART */
 .cart{
   position:fixed;
   right:0;
-  top:0;
+  top:60px;
   width:300px;
-  height:100%;
+  height:90%;
   background:white;
   box-shadow:-2px 0 10px rgba(0,0,0,0.2);
   padding:10px;
   overflow:auto;
+  display:none;
 }
 
 /* LOGIN */
-#loginBox{
+#login{
   position:fixed;
-  top:0;
-  left:0;
   width:100%;
   height:100%;
   background:white;
@@ -103,16 +98,29 @@ button{
   align-items:center;
 }
 
-.login{
+.box{
   padding:20px;
   background:#eee;
   border-radius:10px;
 }
 
-.login input{
+.box input{
   display:block;
   margin:10px 0;
   padding:8px;
+}
+
+/* CHECKOUT */
+#checkout{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:white;
+  display:none;
+  padding:20px;
+  text-align:center;
 }
 </style>
 </head>
@@ -120,8 +128,8 @@ button{
 <body>
 
 <!-- LOGIN -->
-<div id="loginBox">
-  <div class="login">
+<div id="login">
+  <div class="box">
     <h2>Login</h2>
     <input id="user" placeholder="Username">
     <input id="pass" type="password" placeholder="Password">
@@ -130,179 +138,196 @@ button{
 </div>
 
 <header>
-  <h2>Flip Store Pro</h2>
+  <h2>Flip Store Full</h2>
 
   <input id="search" placeholder="Search products...">
 
   <div>
     🛒 <span id="cart-count">0</span>
+    <button onclick="toggleCart()">Cart</button>
     <button onclick="openCheckout()">Checkout</button>
   </div>
 </header>
 
-<!-- CATEGORY TABS -->
+<!-- TABS -->
 <div class="tabs">
-  <div class="tab" onclick="filterCat('all')">All</div>
-  <div class="tab" onclick="filterCat('shoe')">Shoes</div>
-  <div class="tab" onclick="filterCat('headphone')">Headphones</div>
-  <div class="tab" onclick="filterCat('tshirt')">T-Shirts</div>
-  <div class="tab" onclick="filterCat('phone')">Phones</div>
-  <div class="tab" onclick="filterCat('watch')">Watches</div>
+  <div class="tab" onclick="filter('all')">All</div>
+  <div class="tab" onclick="filter('shoe')">Shoes</div>
+  <div class="tab" onclick="filter('headphone')">Headphones</div>
+  <div class="tab" onclick="filter('tshirt')">T-Shirts</div>
+  <div class="tab" onclick="filter('phone')">Phones</div>
+  <div class="tab" onclick="filter('watch')">Watches</div>
 </div>
 
 <!-- PRODUCTS -->
-<div class="container" id="product-list"></div>
+<div class="container" id="products"></div>
 
 <!-- CART -->
-  <button onclick="toggleCart()">🛒 Cart</button>
-<div class="cart" id="cartBox" style="display:none;">
-  <h3>Cart</h3>
-  <div id="cart-items"></div>
+<div class="cart" id="cartBox">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
   <h3 id="total"></h3>
 </div>
 
-</div>
-
 <!-- CHECKOUT -->
-<div id="checkoutBox" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:white; padding:20px;">
-  <h2>Checkout</h2>
-  <p id="checkoutTotal"></p>
-
-  <h3>Payment</h3>
-  <button onclick="pay()">Pay Now</button>
-  <button onclick="closeCheckout()">Close</button>
-</div>
+<div id="checkout"></div>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 /* LOGIN */
 function login(){
-  document.getElementById("loginBox").style.display="none";
+  document.getElementById("login").style.display="none";
 }
 
 /* 25 PRODUCTS */
 let products = [
-  {name:"Shoe 1",cat:"shoe",price:999,img:"shoe1.jpg"},
-  {name:"Shoe 2",cat:"shoe",price:1099,img:"shoe2.jpg"},
-  {name:"Shoe 3",cat:"shoe",price:1199,img:"shoe3.jpg"},
-  {name:"Shoe 4",cat:"shoe",price:1299,img:"shoe4.jpg"},
-  {name:"Shoe 5",cat:"shoe",price:1399,img:"shoe5.jpg"},
+  {n:"Shoe 1",c:"shoe",p:999,i:"shoe1.jpg"},
+  {n:"Shoe 2",c:"shoe",p:1099,i:"shoe2.jpg"},
+  {n:"Shoe 3",c:"shoe",p:1199,i:"shoe3.jpg"},
+  {n:"Shoe 4",c:"shoe",p:1299,i:"shoe4.jpg"},
+  {n:"Shoe 5",c:"shoe",p:1399,i:"shoe5.jpg"},
 
-  {name:"Headphone 1",cat:"headphone",price:1499,img:"headphones1.jpg"},
-  {name:"Headphone 2",cat:"headphone",price:1599,img:"headphones2.jpg"},
-  {name:"Headphone 3",cat:"headphone",price:1699,img:"headphones3.jpg"},
-  {name:"Headphone 4",cat:"headphone",price:1799,img:"headphones4.jpg"},
-  {name:"Headphone 5",cat:"headphone",price:1899,img:"headphones5.jpg"},
+  {n:"Headphone 1",c:"headphone",p:1499,i:"headphones1.jpg"},
+  {n:"Headphone 2",c:"headphone",p:1599,i:"headphones2.jpg"},
+  {n:"Headphone 3",c:"headphone",p:1699,i:"headphones3.jpg"},
+  {n:"Headphone 4",c:"headphone",p:1799,i:"headphones4.jpg"},
+  {n:"Headphone 5",c:"headphone",p:1899,i:"headphones5.jpg"},
 
-  {name:"Tshirt 1",cat:"tshirt",price:499,img:"tshirt1.jpg"},
-  {name:"Tshirt 2",cat:"tshirt",price:599,img:"tshirt2.jpg"},
-  {name:"Tshirt 3",cat:"tshirt",price:699,img:"tshirt3.jpg"},
-  {name:"Tshirt 4",cat:"tshirt",price:799,img:"tshirt4.jpg"},
-  {name:"Tshirt 5",cat:"tshirt",price:899,img:"tshirt5.jpg"},
+  {n:"Tshirt 1",c:"tshirt",p:499,i:"tshirt1.jpg"},
+  {n:"Tshirt 2",c:"tshirt",p:599,i:"tshirt2.jpg"},
+  {n:"Tshirt 3",c:"tshirt",p:699,i:"tshirt3.jpg"},
+  {n:"Tshirt 4",c:"tshirt",p:799,i:"tshirt4.jpg"},
+  {n:"Tshirt 5",c:"tshirt",p:899,i:"tshirt5.jpg"},
 
-  {name:"Phone 1",cat:"phone",price:10999,img:"phone1.jpg"},
-  {name:"Phone 2",cat:"phone",price:11999,img:"phone2.jpg"},
-  {name:"Phone 3",cat:"phone",price:12999,img:"phone3.jpg"},
-  {name:"Phone 4",cat:"phone",price:13999,img:"phone4.jpg"},
-  {name:"Phone 5",cat:"phone",price:14999,img:"phone5.jpg"},
+  {n:"Phone 1",c:"phone",p:10999,i:"phone1.jpg"},
+  {n:"Phone 2",c:"phone",p:11999,i:"phone2.jpg"},
+  {n:"Phone 3",c:"phone",p:12999,i:"phone3.jpg"},
+  {n:"Phone 4",c:"phone",p:13999,i:"phone4.jpg"},
+  {n:"Phone 5",c:"phone",p:14999,i:"phone5.jpg"},
 
-  {name:"Watch 1",cat:"watch",price:1999,img:"watch1.jpg"},
-  {name:"Watch 2",cat:"watch",price:2199,img:"watch2.jpg"},
-  {name:"Watch 3",cat:"watch",price:2399,img:"watch3.jpg"},
-  {name:"Watch 4",cat:"watch",price:2599,img:"watch4.jpg"},
-  {name:"Watch 5",cat:"watch",price:2799,img:"watch5.jpg"}
+  {n:"Watch 1",c:"watch",p:1999,i:"watch1.jpg"},
+  {n:"Watch 2",c:"watch",p:2199,i:"watch2.jpg"},
+  {n:"Watch 3",c:"watch",p:2399,i:"watch3.jpg"},
+  {n:"Watch 4",c:"watch",p:2599,i:"watch4.jpg"},
+  {n:"Watch 5",c:"watch",p:2799,i:"watch5.jpg"}
 ];
 
-let current = products;
-
 /* DISPLAY */
-function display(list){
-  let box = document.getElementById("product-list");
+function show(list){
+  let box=document.getElementById("products");
   box.innerHTML="";
-
   list.forEach((p,i)=>{
-    box.innerHTML += `
+    box.innerHTML+=`
       <div class="card">
-        <img src="${p.img}">
-        <h3>${p.name}</h3>
-        <p>₹${p.price}</p>
-        <button onclick="addToCart(${i})">Add</button>
+        <img src="${p.i}">
+        <h3>${p.n}</h3>
+        <p>₹${p.p}</p>
+        <button onclick="add(${i})">Add</button>
       </div>
     `;
   });
 }
 
-/* FILTER */
-function filterCat(cat){
-  if(cat=="all") display(products);
-  else display(products.filter(p=>p.cat==cat));
-}
+/* ADD */
+function add(i){
+  let item=products[i];
+  let found=cart.find(c=>c.n==item.n);
 
-/* CART */
-function addToCart(i){
-  let item = products[i];
-  let found = cart.find(c=>c.name==item.name);
-
-  if(found) found.qty++;
-  else cart.push({...item,qty:1});
+  if(found) found.q++;
+  else cart.push({...item,q:1});
 
   save();
 }
 
+/* REMOVE */
+function remove(i){
+  cart.splice(i,1);
+  save();
+}
+
+/* SAVE */
 function save(){
   localStorage.setItem("cart",JSON.stringify(cart));
   update();
 }
 
+/* UPDATE */
 function update(){
   document.getElementById("cart-count").innerText=cart.length;
 
-  let box=document.getElementById("cart-items");
+  let box=document.getElementById("cartItems");
   box.innerHTML="";
-
   let total=0;
 
   cart.forEach((c,i)=>{
-    total+=c.price*c.qty;
+    total+=c.p*c.q;
 
     box.innerHTML+=`
       <div>
-        ${c.name} (x${c.qty})<br>
-        ₹${c.price}
+        ${c.n} × ${c.q}<br>
+        ₹${c.p}
+        <button onclick="remove(${i})">X</button>
       </div>
+      <hr>
     `;
   });
 
   document.getElementById("total").innerText="Total ₹"+total;
 }
 
+/* CART TOGGLE */
+function toggleCart(){
+  let box=document.getElementById("cartBox");
+  box.style.display = box.style.display==="block"?"none":"block";
+}
+
+/* FILTER */
+function filter(c){
+  if(c=="all") show(products);
+  else show(products.filter(p=>p.c==c));
+}
+
 /* SEARCH */
 document.getElementById("search").addEventListener("input",e=>{
   let v=e.target.value.toLowerCase();
-  display(products.filter(p=>p.name.toLowerCase().includes(v)));
+  show(products.filter(p=>p.n.toLowerCase().includes(v)));
 });
 
 /* CHECKOUT */
 function openCheckout(){
-  let total=0;
-  cart.forEach(c=>total+=c.price*c.qty);
-  document.getElementById("checkoutTotal").innerText="Pay ₹"+total;
-  document.getElementById("checkoutBox").style.display="block";
+  let t=0;
+  cart.forEach(c=>t+=c.p*c.q);
+
+  document.getElementById("checkout").style.display="block";
+  document.getElementById("checkout").innerHTML=`
+    <h2>Checkout</h2>
+    <h3>Total ₹${t}</h3>
+    <button onclick="pay()">Pay Now</button>
+    <button onclick="closeCheckout()">Close</button>
+  `;
 }
 
 function closeCheckout(){
-  document.getElementById("checkoutBox").style.display="none";
+  document.getElementById("checkout").style.display="none";
 }
 
+/* 🎉 SUCCESS ORDER */
 function pay(){
-  alert("Payment Successful (Demo)");
   cart=[];
   save();
-  closeCheckout();
+
+  document.getElementById("checkout").innerHTML=`
+    <div style="margin-top:100px;">
+      <h1>🎉 Order Successfully Placed!</h1>
+      <p>Thank you for shopping</p>
+      <button onclick="location.reload()">Continue Shopping</button>
+    </div>
+  `;
 }
 
-display(products);
+/* INIT */
+show(products);
 update();
 </script>
 
